@@ -1,0 +1,57 @@
+{
+    "files.exclude": {
+        ".vscode": false,
+        "build": false,
+        "configuration": false,
+        "scripts": false,
+        ".config": false,
+        ".config.old": false,
+        "CMakeLists.txt": false,
+        "component.cmake": false,
+        "Kconfig": false,
+        "Kconfig": false,
+        "LICENSE": false,
+        "version.h.in": false,
+    },
+    "VsCodeTaskButtons.tasks": [
+        {
+            "label": "Menu configuration",
+            "task": "Menu configuration",
+            "tooltip": "Runing kconfig menu configuration",
+        },
+        {
+            "label": "Build",
+            "task": "Build",
+            "tooltip": "Build project",
+        },
+        {
+            "label": "Build and flash",
+            "task": "Build and flash",
+            "tooltip": "Build project and flash firmware to mcu",
+        },
+        {
+            "label": "Flash",
+            "task": "Flash",
+            "tooltip": "Flash firmware to mcu",
+        },
+        {
+            "label": "Reset",
+            "task": "Reset",
+            "tooltip": "Reset mcu",
+        },
+        {
+            "label": "Make docs",
+            "task": "Make docs",
+            "tooltip": "Make doxygen docs",
+        },
+        {
+            "label": "Clean",
+            "task": "Clean",
+            "tooltip": "Cleaning the workplace from the build folder and folders with documentation",
+        }
+    ],
+    "files.associations": {
+        "stdbool.h": "c",
+        "autoconf.h": "c"
+    },
+}

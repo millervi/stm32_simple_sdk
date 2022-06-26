@@ -1,0 +1,247 @@
+menu "General"
+    choice GCC_COMPILER_GENERAL_LANGUAGE_STANDARD
+        prompt "Language standard"
+        default GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_GNU11
+        help
+           Set C language standard.
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_C90_ANSI_C89
+            bool "ISO C90 / ANSI C89"
+            help
+                Implementation (-std=c90).
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_C99
+            bool "ISO C99"
+            help
+                Implementation (-std=c99).
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_C11
+            bool "ISO C11"
+            help
+                Implementation (-std=c11).
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_C17
+            bool "ISO C17"
+            help
+                Implementation (-std=c17).
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_GNU90
+            bool "ISO C90 + gnu extensions"
+            help
+                Implementation (-std=gnu90).
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_GNU99
+            bool "ISO C99 + gnu extensions"
+            help
+                Implementation (-std=gnu99).
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_GNU11
+            bool "ISO C11 + gnu extensions"
+            help
+                Implementation (-std=gnu11).
+
+        config GCC_COMPILER_GENERAL_LANGUAGE_STANDARD_GNU17
+            bool "ISO C17 + gnu extensions"
+            help
+                Implementation (-std=gnu17).
+    endchoice
+endmenu
+
+menu "Debuging"
+    choice GCC_COMPILER_DEBUGING
+        prompt "Debug level"
+        default GCC_COMPILER_DEBUGING_MAXIMUM
+        help
+            Define C compiler debug level.
+
+        config GCC_COMPILER_DEBUGING_NONE
+            bool "NONE"
+            help
+                Implementation (none).
+
+        config GCC_COMPILER_DEBUGING_MINIMAL
+            bool "Minimal"
+            help
+                Implementation (-g1).
+
+        config GCC_COMPILER_DEBUGING_DEFAULT
+            bool "Default"
+            help
+                Implementation (-g).
+
+        config GCC_COMPILER_DEBUGING_MAXIMUM
+            bool "Maximum"
+            help
+                Implementation (-g3).
+    endchoice
+endmenu
+
+menu "Preprocessor"
+    config GCC_COMPILER_PREPROCESSOR_PREPROCESS_ONLY
+        bool "Preprocess only"
+        default n
+        help
+            Implementation (-E).
+
+    config GCC_COMPILER_PREPROCESSOR_EXCLUDE_SYSTEM_DIRS
+        bool "Do not search system directories"
+        default n
+        help
+            Implementation (-nostdinc).
+endmenu
+
+menu "Optimization"
+    choice GCC_COMPILER_OPTIMIZATION
+        prompt "Optimization level"
+        default GCC_COMPILER_OPTIMIZATION_NONE
+        help
+            Define gcc compiler optimization level.
+
+        config GCC_COMPILER_OPTIMIZATION_NONE
+            bool "NONE"
+            help
+                Implementation (-O0).
+
+        config GCC_COMPILER_OPTIMIZATION_OPTIMIZE_FOR_DEBUG
+            bool "Optimize for debug"
+            help
+                Implementation (-Og).
+
+        config GCC_COMPILER_OPTIMIZATION_OPTIMIZE
+            bool "Optimize"
+            help
+                Implementation (-O1).
+
+        config GCC_COMPILER_OPTIMIZATION_OPTIMIZE_MORE
+            bool "Optimize more"
+            help
+                Implementation (-O2).
+
+        config GCC_COMPILER_OPTIMIZATION_OPTIMIZE_MOST
+            bool "Optimize most"
+            help
+                Implementation (-O3).
+                
+        config GCC_COMPILER_OPTIMIZATION_OPTIMIZE_FOR_SIZE
+            bool "Optimize for size"
+            help
+                Implementation (-Os).
+
+        config GCC_COMPILER_OPTIMIZATION_OPTIMIZE_FOR_SPEED
+            bool "Optimize for speed"
+            help
+                Implementation (-Ofast).
+    endchoice
+
+    config GCC_COMPILER_OPTIMIZATION_FUNCTION_SECTIONS
+        bool "Place functions in their own sections"
+        default y
+        help
+            Implementation (-ffunction-sections).
+
+    config GCC_COMPILER_OPTIMIZATION_DATA_SECTIONS
+        bool "Place data in their own sections"
+        default y
+        help
+            Implementation (-fdata-sections).
+
+    config GCC_COMPILER_OPTIMIZATION_SLOW_FLASH_DATA
+        bool "Assume loading data from flash is slower than fetching instruction"
+        depends on !CXX_ON
+        default n
+        help
+            Implementation (-mslow-flash-data).
+
+    config GCC_COMPILER_OPTIMIZATION_NO_STRICT_ALIASING
+        bool "Disable \"strict aliasing\" optimization"
+        default n
+        help
+            Implementation (-fno-strict-aliasing).
+endmenu
+
+menu "Warnings"
+    config GCC_COMPILER_WARNINGS_ALL
+        bool "Enable all warnings about questionable constructions"
+        default y
+        help
+            Implementation (-Wall).
+
+    config GCC_COMPILER_WARNINGS_EXTRA
+        bool "Enable extra warning flags"
+        default n
+        help
+            Implementation (-Wextra).
+
+    config GCC_COMPILER_WARNINGS_ERROR
+        bool "Treat warnings as error"
+        default n
+        help
+            Implementation (-Werror).
+
+    config GCC_COMPILER_WARNINGS_FATAL_ERRORS
+        bool "Abort compilation on first error"
+        default n
+        help
+            Implementation (-Wfatal-errors).
+
+    config GCC_COMPILER_WARNINGS_PEDANTIC
+        bool "Issue all warnings demanded by strict ISO C and CXX"
+        default n
+        help
+            Implementation (-pedantic).
+
+    config GCC_COMPILER_WARNINGS_PEDANTIC_ERRORS
+        bool "Generate error instead of warnings from strict ISO C and CXX"
+        default n
+        help
+            Implementation (-pedantic-errors).
+
+    config GCC_COMPILER_WARNINGS_MISSING_INCLUDE_DIRS
+        bool "Warn if user-supplied include directory does not exist"
+        default n
+        help
+            Implementation (-Wmissing-include-dirs).
+
+    config GCC_COMPILER_WARNINGS_SWITCH_DEFAULT
+        bool "Warn when a switch statement does not have a default case"
+        default n
+        help
+            Implementation (-Wswitch-default).
+
+    config GCC_COMPILER_WARNINGS_SWITCH_ENUM
+        bool "Warn if switch is used on an enum type and the switch statement lacks case for some enumerations"
+        default n
+        help
+            Implementation (-Wswitch-enum).
+
+    config GCC_COMPILER_WARNINGS_CONVERSION
+        bool "Warn for implicit conversion"
+        default n
+        help
+            Implementation (-Wconversion).
+endmenu
+
+menu "Miscellaneous"
+    config GCC_COMPILER_MISC_VERBOSE
+        bool "Verbose"
+        default n
+        help
+            Implementation (-v).
+
+    config GCC_COMPILER_MISC_PIC
+        bool "Position independent code"
+        default n
+        help
+            Implementation (-fPIC).
+
+    config GCC_COMPILER_MISC_STACK_USAGE
+        bool "Enable stack usage analysis"
+        default y
+        help
+            Implementation (-fstack-usage).
+
+    config GCC_COMPILER_MISC_OTHER_FLAGS
+        string "Other flags"
+        help
+            This option is a free-form string.
+endmenu

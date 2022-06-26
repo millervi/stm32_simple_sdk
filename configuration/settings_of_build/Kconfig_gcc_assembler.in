@@ -1,0 +1,63 @@
+menu "General"
+    config GCC_ASSEMBLER_GENERAL_WARNINGS
+        bool "Suppress warnings"
+        default n
+        help
+            Implementation (-Wa,-W).
+endmenu
+
+menu "Debuging"
+    choice GCC_ASSEMBLER_DEBUGING
+        prompt "Debug level"
+        default GCC_ASSEMBLER_DEBUGING_MAXIMUM
+        help
+            Define gcc assembler debug level.
+
+        config GCC_ASSEMBLER_DEBUGING_NONE
+            bool "NONE"
+            help
+                Implementation (none).
+
+        config GCC_ASSEMBLER_DEBUGING_MINIMAL
+            bool "Minimal"
+            help
+                Implementation (-g1).
+
+        config GCC_ASSEMBLER_DEBUGING_DEFAULT
+            bool "Default"
+            help
+                Implementation (-g).
+
+        config GCC_ASSEMBLER_DEBUGING_MAXIMUM
+            bool "Maximum"
+            help
+                Implementation (-g3).
+    endchoice
+endmenu
+
+menu "Preprocessor"
+    config GCC_ASSEMBLER_PREPROCESSOR_PREPROCESS_ONLY
+        bool "Preprocess only"
+        default n
+        help
+            Implementation (-E).
+
+    config GCC_ASSEMBLER_PREPROCESSOR_EXCLUDE_SYSTEM_DIRS
+        bool "Do not search system directories"
+        default n
+        help
+            Implementation (-nostdinc).
+
+    config GCC_ASSEMBLER_PREPROCESSOR_PREPROCESS_ASSEMBLER
+        bool "Always preprocess assembler"
+        default y
+        help
+            Implementation (-x assembler-with-cpp).
+endmenu
+
+menu "Miscellaneous"
+    config GCC_ASSEMBLER_MISC_OTHER_FLAGS
+        string "Other flags"
+        help
+            This option is a free-form string.
+endmenu

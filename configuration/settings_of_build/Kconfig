@@ -1,0 +1,33 @@
+menu "Settings of build"
+    config CXX_ON
+        bool "Enable CXX"
+        help
+            This enables CXX.
+
+    menu "MCU"
+        source "configuration/settings_of_build/Kconfig_mcu.in"
+    endmenu
+
+    menu "GCC assembler"
+        source "configuration/settings_of_build/Kconfig_gcc_assembler.in"
+    endmenu
+
+    menu "GCC compiler"
+        source "configuration/settings_of_build/Kconfig_gcc_compiler.in"
+    endmenu
+
+    menu "GCC linker"
+        # depends on !CXX_ON
+        source "configuration/settings_of_build/Kconfig_gcc_linker.in"
+    endmenu
+    
+    menu "G++ compiler"
+        # depends on CXX_ON
+        source "configuration/settings_of_build/Kconfig_g++_compiler.in"
+    endmenu
+
+    menu "G++ linker"
+        # depends on CXX_ON
+        source "configuration/settings_of_build/Kconfig_g++_linker.in"
+    endmenu
+endmenu

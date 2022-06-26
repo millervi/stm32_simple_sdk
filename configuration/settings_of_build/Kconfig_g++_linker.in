@@ -1,0 +1,74 @@
+menu "General"
+    config GXX_LINKER_GENERAL_LINKER_SCRIPT
+        string "Linker script"
+        help
+            Implementation (-TPROJECT_ROOT_DIR/YOUR_LINKER_SCRIPT.ld).
+
+    choice GXX_LINKER_GENERAL_SYSTEM_CALLS
+        prompt "System calls"
+        default GXX_LINKER_GENERAL_SYSTEM_CALLS_MINIMAL
+        help
+           Set system calls.
+
+        config GXX_LINKER_GENERAL_SYSTEM_CALLS_NONE
+            bool "Do not use system calls from library"
+            help
+                Implementation (none).
+
+        config GXX_LINKER_GENERAL_SYSTEM_CALLS_MINIMAL
+            bool "Minimal implementation"
+            help
+                Implementation (--specs=nosys.specs).
+    endchoice
+
+    config GXX_LINKER_GENERAL_CROSS_REFERENCE
+        bool "Add symbol cross reference table to map file"
+        default n
+        help
+            Implementation (-Wl,--cref).
+
+    config GXX_LINKER_GENERAL_DISCARD_UNUSED_SECTIONS
+        bool "Discard unused sections"
+        default y
+        help
+            Implementation (-Wl,--gc-sections).
+
+    config GXX_LINKER_GENERAL_VERBOSE
+        bool "Verbose"
+        default n
+        help
+            Implementation (-Wl,--verbose).
+
+    config GXX_LINKER_GENERAL_NO_START_FILES
+        bool "Do not use standard start files"
+        default n
+        help
+            Implementation (-nostartfiles).
+
+    config GXX_LINKER_GENERAL_NO_DEFAULT_LIBS
+        bool "Do not use default libraries"
+        default n
+        help
+            Implementation (-nodefaultlibs).
+
+    config GXX_LINKER_GENERAL_NO_STANDARD_LIBS
+        bool "No startup or default libs"
+        default n
+        help
+            Implementation (-nostdlib).
+endmenu
+
+menu "Libraries"
+    config GXX_LINKER_LIBRARIES_C_MATH_LIBRARY
+        bool "Use C math library"
+        default y
+        help
+            Implementation (-Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group).
+endmenu
+
+menu "Miscellaneous"
+    config GXX_LINKER_MISC_OTHER_FLAGS
+        string "Other flags"
+        help
+            This option is a free-form string.
+endmenu

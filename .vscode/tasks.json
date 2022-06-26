@@ -1,0 +1,61 @@
+{
+    "version": "2.0.0",
+    "projectName": "stm32_simple_sdk",
+    "tasks": [
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "python ${workspaceRoot}/scripts/build.py ${workspaceRoot}",
+            "problemMatcher": []
+        },
+        {
+            "label": "Flash",
+            "type": "shell",
+            "windows": {
+                "args": [
+                    "-P",
+                    "${workspaceRoot}/build/stm32_simple_sdk.bin",
+                    "0x08000000",
+                    "-Rst"
+                ],
+                "command": "${env:ST-LINK_CLI_PATH}/ST-LINK_CLI.exe"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "Build and flash",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Build",
+                "Flash"
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Reset",
+            "windows": {
+                "args": [ "-Rst" ],
+                "command": "${env:ST-LINK_CLI_PATH}/ST-LINK_CLI.exe"
+            },
+            "problemMatcher": []   
+        },
+        {
+            "label": "Menu configuration",
+            "type": "shell",
+            "command": "python ${workspaceRoot}/configuration/scripts/menuconfig.py",
+            "problemMatcher": []
+        },
+        {
+            "label": "Make docs",
+            "type": "shell",
+            "command": "python ${workspaceRoot}/scripts/doc.py ${workspaceRoot}",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+            "command": "python ${workspaceRoot}/scripts/clean.py ${workspaceRoot}",
+            "problemMatcher": []
+        },
+    ]
+}

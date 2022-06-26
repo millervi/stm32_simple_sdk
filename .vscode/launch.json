@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "projectName": "stm32_simple_sdk",
+    "configurations": [
+        {
+            "name": "STlink debug launch",
+            "cwd": "${workspaceRoot}",
+            "executable": "${workspaceRoot}/build/stm32_simple_sdk.elf",
+            "request": "launch",
+            "type": "cortex-debug",
+            "servertype": "openocd",
+            "device": "STM32F411RE",
+            "interface": "swd",
+            "showDevDebugOutput": "raw",
+            "gdbPath": "${env:GDB_PATH}/bin/arm-none-eabi-gdb.exe",
+            "serverpath": "${env:OPEN_OCD_PATH}/bin/openocd.exe",
+            "runToMain": true,
+            "preLaunchTask": "Build and flash",
+            "svdFile": "${workspaceRoot}/components/system/mcu/core/system_view_description/STM32F411.svd",
+            "configFiles": [
+                "${env:OPEN_OCD_PATH}/share/openocd/scripts/board/st_nucleo_f4.cfg"
+            ],
+        }
+    ]
+}

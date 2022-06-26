@@ -1,0 +1,6 @@
+menu "Component: logger"
+    config LOGGER_ON
+        bool "Enable logger"
+        help
+            This enables logger
+endmenu

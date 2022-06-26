@@ -1,0 +1,45 @@
+include(${CMAKE_SOURCE_DIR}/component.cmake)
+
+component_registration(
+    SOURCE_FILES
+        components/system/mcu/cmsis/stm32f4xx/sources/system_stm32f4xx.c
+        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_dma.c
+        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_exti.c
+        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_gpio.c
+        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_rcc.c
+        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_usart.c
+        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_utils.c
+        components/system/mcu/core/sources/syscalls.c
+        components/system/mcu/core/sources/sysmem.c
+        components/system/mcu/core/startup/startup_stm32f411retx.s
+        components/system/mcu/core/system_clock/sources/system_clock.c
+        components/system/mcu/core/system_interrupts/sources/system_interrupts.c
+        components/system/mcu/periphery/usart_log/sources/usart_log.c
+        components/system/hal/hal_usart_log/sources/hal_usart_log.c
+        components/system/bsp/sources/bsp.c
+    INCLUDE_DIRECTORIES
+        components/system/mcu/cmsis/arm
+        components/system/mcu/cmsis/stm32f4xx/include
+        components/system/mcu/stm32f4xx_ll/include
+        components/system/mcu/core/system_interrupts/include
+        components/system/mcu/core/system_clock/include
+        components/system/mcu/periphery/usart_log/include
+        components/system/hal/hal_usart_log/include
+        components/system/bsp/include
+    DEFINITIONS
+        STM32F411xE
+        DEBUG 
+        STM32F411xE 
+        USE_FULL_LL_DRIVER 
+        HSE_VALUE=8000000 
+        HSE_STARTUP_TIMEOUT=100 
+        LSE_STARTUP_TIMEOUT=5000 
+        LSE_VALUE=32768 
+        EXTERNAL_CLOCK_VALUE=12288000 
+        HSI_VALUE=16000000 
+        LSI_VALUE=32000 
+        VDD_VALUE=3300 
+        PREFETCH_ENABLE=1 
+        INSTRUCTION_CACHE_ENABLE=1 
+        DATA_CACHE_ENABLE=1
+)

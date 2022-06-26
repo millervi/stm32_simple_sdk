@@ -1,0 +1,145 @@
+menu "Core processor"
+    choice CORE_PROCESSOR
+        prompt "Core"
+        default CORE_PROCESSOR_M4
+        help
+            Define ARM microarchitecture.
+
+        config CORE_PROCESSOR_M0
+            bool "M0"
+            help
+                Implementation (cortex-m0).
+
+        config CORE_PROCESSOR_M0_PLUS
+            bool "M0+"
+            help
+                Implementation (cortex-m0plus).
+
+        config CORE_PROCESSOR_M3
+            bool "M3"
+            help
+                Implementation (cortex-m3).
+
+        config CORE_PROCESSOR_M4
+            bool "M4"
+            help
+                Implementation (cortex-m4).
+    endchoice
+endmenu
+
+menu "Floating-point unit"
+    choice FPU_UNIT
+        prompt "Unit"
+        default FPU_UNIT_FPV4_SP_D16
+        help
+            Define floating-point unit.
+
+        config FPU_NONE
+            bool "NONE"
+            help
+                Without floating-point unit.
+
+        config FPU_UNIT_FPV4_SP_D16
+            bool "FPv4-SP-D16"
+            help
+                Implementation (-mfpu=fpv4-sp-d16).
+    endchoice
+endmenu
+
+menu "Floating-point ABI"
+    choice FPU_ABI
+        prompt "ABI"
+        default FPU_ABI_SOFTWARE
+        help
+            Define floating-point ABI.
+
+        config FPU_ABI_SOFTWARE
+            bool "SW"
+            help
+                Sowtware implementation (-mfloat-abi=soft).
+
+        config FPU_ABI_HARDWARE
+            bool "HW"
+            depends on !FPU_NONE
+            help
+                Hardware implementation (-mfloat-abi=hard).
+
+        config FPU_ABI_MIX
+            bool "SW/HW"
+            depends on !FPU_NONE
+            help
+                Mix SW/HW implementation (-mfloat-abi=softfp).
+    endchoice
+endmenu
+
+menu "Instruction set"
+    choice INSTRUCTION_SET
+        prompt "Set"
+        default INSTRUCTION_SET_THUMB_2
+        help
+            Define instruction set.
+
+        config INSTRUCTION_SET_THUMB_2
+            bool "Thumb2"
+            help
+                Implementation (-mthumb).
+    endchoice
+endmenu
+
+menu "Runtime library"
+    choice RUNTIME_LIBRARY
+        prompt "Library"
+        default RUNTIME_LIBRARY_REDUCED_C if (!CXX_ON)
+        default RUNTIME_LIBRARY_REDUCED_C_REDUCED_CXX if (CXX_ON)
+        help
+            Define runtime library.
+
+        config RUNTIME_LIBRARY_STANDARD_C
+            bool "Standard C"
+            depends on !CXX_ON
+            help
+                Implementation (none).
+
+        config RUNTIME_LIBRARY_REDUCED_C
+            bool "Reduced C"
+            depends on !CXX_ON
+            help
+                Implementation (--specs=nano.specs).
+
+        config RUNTIME_LIBRARY_STANDARD_C_STANDARD_CXX
+            bool "Standard C, standard CXX"
+            depends on CXX_ON
+            help
+                Implementation (none).
+
+        config RUNTIME_LIBRARY_STANDARD_C_REDUCED_CXX
+            bool "Standard C, reduced CXX"
+            depends on CXX_ON
+            help
+                Implementation (--specs=standard_c_nano_cpp.specs).
+
+        config RUNTIME_LIBRARY_REDUCED_C_STANDARD_CXX
+            bool "Reduced C, standard CXX"
+            depends on CXX_ON
+            help
+                Implementation (--specs=nano_c_standard_cpp.specs).
+
+        config RUNTIME_LIBRARY_REDUCED_C_REDUCED_CXX
+            bool "Reduced C, reduced CXX"
+            depends on CXX_ON
+            help
+                Implementation (--specs=nano.specs).
+    endchoice
+endmenu
+
+config PRINTF_FLOAT_ENABLE
+    bool "Use float with printf from newlib-nano"
+    default n
+    help
+        Implementation (-u _printf_float).
+
+config SCANF_FLOAT_ENABLE
+    bool "Use float with scanf from newlib-nano"
+    default n
+    help
+        Implementation (-u _scanf_float).

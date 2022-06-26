@@ -1,0 +1,264 @@
+menu "General"
+    choice GXX_COMPILER_GENERAL_LANGUAGE_STANDARD
+        prompt "Language standard"
+        default GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_GNUXX14
+        help
+           Set C++ language standard.
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_CXX98
+            bool "ISO C++98"
+            help
+                Implementation (-std=c++98).
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_CXX11
+            bool "ISO C++11"
+            help
+                Implementation (-std=c++11).
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_CXX14
+            bool "ISO C++14"
+            help
+                Implementation (-std=c++14).
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_ISO_CXX17
+            bool "ISO C++17"
+            help
+                Implementation (-std=c++17).
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_GNUXX98
+            bool "ISO C++98 + gnu extensions"
+            help
+                Implementation (-std=gnu++98).
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_GNUXX11
+            bool "ISO C++11 + gnu extensions"
+            help
+                Implementation (-std=gnu++11).
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_GNUXX14
+            bool "ISO C++14 + gnu extensions"
+            help
+                Implementation (-std=gnu++14).
+
+        config GXX_COMPILER_GENERAL_LANGUAGE_STANDARD_GNUXX17
+            bool "ISO C++17 + gnu extensions"
+            help
+                Implementation (-std=gnu++17).
+    endchoice
+endmenu
+
+menu "Debuging"
+    choice GXX_COMPILER_DEBUGING
+        prompt "Debug level"
+        default GXX_COMPILER_DEBUGING_MAXIMUM
+        help
+            Define g++ compiler debug level.
+
+        config GXX_COMPILER_DEBUGING_NONE
+            bool "NONE"
+            help
+                Implementation (none).
+
+        config GXX_COMPILER_DEBUGING_MINIMAL
+            bool "Minimal"
+            help
+                Implementation (-g1).
+
+        config GXX_COMPILER_DEBUGING_DEFAULT
+            bool "Default"
+            help
+                Implementation (-g).
+
+        config GXX_COMPILER_DEBUGING_MAXIMUM
+            bool "Maximum"
+            help
+                Implementation (-g3).
+    endchoice
+endmenu
+
+menu "Preprocessor"
+    config GXX_COMPILER_PREPROCESSOR_PREPROCESS_ONLY
+        bool "Preprocess only"
+        default n
+        help
+            Implementation (-E).
+
+    config GXX_COMPILER_PREPROCESSOR_EXCLUDE_SYSTEM_DIRS
+        bool "Do not search system directories"
+        default n
+        help
+            Implementation (-nostdinc).
+endmenu
+
+menu "Optimization"
+    choice GXX_COMPILER_OPTIMIZATION
+        prompt "Optimization level"
+        default GXX_COMPILER_OPTIMIZATION_NONE
+        help
+            Define g++ compiler optimization level.
+
+        config GXX_COMPILER_OPTIMIZATION_NONE
+            bool "NONE"
+            help
+                Implementation (-O0).
+
+        config GXX_COMPILER_OPTIMIZATION_OPTIMIZE_FOR_DEBUG
+            bool "Optimize for debug"
+            help
+                Implementation (-Og).
+
+        config GXX_COMPILER_OPTIMIZATION_OPTIMIZE
+            bool "Optimize"
+            help
+                Implementation (-O1).
+
+        config GXX_COMPILER_OPTIMIZATION_OPTIMIZE_MORE
+            bool "Optimize more"
+            help
+                Implementation (-O2).
+
+        config GXX_COMPILER_OPTIMIZATION_OPTIMIZE_MOST
+            bool "Optimize most"
+            help
+                Implementation (-O3).
+                
+        config GXX_COMPILER_OPTIMIZATION_OPTIMIZE_FOR_SIZE
+            bool "Optimize for size"
+            help
+                Implementation (-Os).
+
+        config GXX_COMPILER_OPTIMIZATION_OPTIMIZE_FOR_SPEED
+            bool "Optimize for speed"
+            help
+                Implementation (-Ofast).
+    endchoice
+
+    config GXX_COMPILER_OPTIMIZATION_FUNCTION_SECTIONS
+        bool "Place functions in their own sections"
+        default y
+        help
+            Implementation (-ffunction-sections).
+
+    config GXX_COMPILER_OPTIMIZATION_DATA_SECTIONS
+        bool "Place data in their own sections"
+        default y
+        help
+            Implementation (-fdata-sections).
+
+    config GXX_COMPILER_OPTIMIZATION_NO_STRICT_ALIASING
+        bool "Disable \"strict aliasing\" optimization"
+        default n
+        help
+            Implementation (-fno-strict-aliasing).
+
+    config GXX_COMPILER_OPTIMIZATION_EXCEPTIONS
+        bool "Disable handling exceptions"
+        default y
+        help
+            Implementation (-fno-exceptions).
+
+    config GXX_COMPILER_OPTIMIZATION_RTTI
+        bool "Disable generation of information about every class with virtual functions"
+        default y
+        help
+            Implementation (-fno-rtti).
+
+    config GXX_COMPILER_OPTIMIZATION_THREAD_SAFE
+        bool "Disable thread-safe initialization of local static objects"
+        default n
+        help
+            Implementation (-fno-threadsafe-statics).
+
+    config GXX_COMPILER_OPTIMIZATION_CXA_ATEXIT
+        bool "Do not use __cxa_atexit for registering static destructors"
+        default y
+        help
+            Implementation (-fno-use-cxa-atexit).
+endmenu
+
+menu "Warnings"
+    config GXX_COMPILER_WARNINGS_ALL
+        bool "Enable all warnings about questionable constructions"
+        default y
+        help
+            Implementation (-Wall).
+
+    config GXX_COMPILER_WARNINGS_EXTRA
+        bool "Enable extra warning flags"
+        default n
+        help
+            Implementation (-Wextra).
+
+    config GXX_COMPILER_WARNINGS_ERROR
+        bool "Treat warnings as error"
+        default n
+        help
+            Implementation (-Werror).
+
+    config GXX_COMPILER_WARNINGS_FATAL_ERRORS
+        bool "Abort compilation on first error"
+        default n
+        help
+            Implementation (-Wfatal-errors).
+
+    config GXX_COMPILER_WARNINGS_PEDANTIC
+        bool "Issue all warnings demanded by strict ISO C and CXX"
+        default n
+        help
+            Implementation (-pedantic).
+
+    config GXX_COMPILER_WARNINGS_PEDANTIC_ERRORS
+        bool "Generate error instead of warnings from strict ISO C and CXX"
+        default n
+        help
+            Implementation (-pedantic-errors).
+
+    config GXX_COMPILER_WARNINGS_MISSING_INCLUDE_DIRS
+        bool "Warn if user-supplied include directory does not exist"
+        default n
+        help
+            Implementation (-Wmissing-include-dirs).
+
+    config GXX_COMPILER_WARNINGS_SWITCH_DEFAULT
+        bool "Warn when a switch statement does not have a default case"
+        default n
+        help
+            Implementation (-Wswitch-default).
+
+    config GXX_COMPILER_WARNINGS_SWITCH_ENUM
+        bool "Warn if switch is used on an enum type and the switch statement lacks case for some enumerations"
+        default n
+        help
+            Implementation (-Wswitch-enum).
+
+    config GXX_COMPILER_WARNINGS_CONVERSION
+        bool "Warn for implicit conversion"
+        default n
+        help
+            Implementation (-Wconversion).
+endmenu
+
+menu "Miscellaneous"
+    config GXX_COMPILER_MISC_VERBOSE
+        bool "Verbose"
+        default n
+        help
+            Implementation (-v).
+
+    config GXX_COMPILER_MISC_PIC
+        bool "Position independent code"
+        default n
+        help
+            Implementation (-fPIC).
+
+    config GXX_COMPILER_MISC_STACK_USAGE
+        bool "Enable stack usage analysis"
+        default y
+        help
+            Implementation (-fstack-usage).
+
+    config GXX_COMPILER_MISC_OTHER_FLAGS
+        string "Other flags"
+        help
+            This option is a free-form string.
+endmenu

@@ -1,0 +1,6 @@
+menu "Component: assert"
+    config ASSERT_ON
+        bool "Enable assert"
+        help
+            This enables assert
+endmenu

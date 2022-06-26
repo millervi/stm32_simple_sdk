@@ -1,0 +1,5 @@
+mainmenu "Project configuration"
+
+source "configuration/settings_of_build/Kconfig"
+source "configuration/general/Kconfig"
+source "components/*/Kconfig"

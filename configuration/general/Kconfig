@@ -1,0 +1,11 @@
+menu "General"
+    config PROJECT_NAME
+        string "Project name"
+    help
+        This name will be used in the main cmake file.
+
+    config PROJECT_VERSION
+        string "Project version"
+    help
+        This version will be used in the main cmake file, use format major.minor.path (for example 0.0.1).
+endmenu
