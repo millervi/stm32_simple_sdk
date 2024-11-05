@@ -78,11 +78,13 @@ Add to CMakeLists.txt:
 ```cmake
 include(${CMAKE_SOURCE_DIR}/component.cmake)
 
+set(PLACE_COMPONENT ${CMAKE_CURRENT_SOURCE_DIR})
+
 component_registration(
     SOURCE_FILES
-        components/simple_component/sources/simple_component.c
+        ${PLACE_COMPONENT}/sources/simple_component.c
     INCLUDE_DIRECTORIES
-        components/simple_component/include
+        ${PLACE_COMPONENT}/include
 )
 ```
 

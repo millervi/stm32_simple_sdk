@@ -1,31 +1,33 @@
 include(${CMAKE_SOURCE_DIR}/component.cmake)
 
+set(PLACE_COMPONENT ${CMAKE_CURRENT_SOURCE_DIR})
+
 component_registration(
     SOURCE_FILES
-        components/system/mcu/cmsis/stm32f4xx/sources/system_stm32f4xx.c
-        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_dma.c
-        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_exti.c
-        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_gpio.c
-        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_rcc.c
-        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_usart.c
-        components/system/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_utils.c
-        components/system/mcu/core/sources/syscalls.c
-        components/system/mcu/core/sources/sysmem.c
-        components/system/mcu/core/startup/startup_stm32f411retx.s
-        components/system/mcu/core/system_clock/sources/system_clock.c
-        components/system/mcu/core/system_interrupts/sources/system_interrupts.c
-        components/system/mcu/periphery/usart_log/sources/usart_log.c
-        components/system/hal/hal_usart_log/sources/hal_usart_log.c
-        components/system/bsp/sources/bsp.c
+        ${PLACE_COMPONENT}/mcu/cmsis/stm32f4xx/sources/system_stm32f4xx.c
+        ${PLACE_COMPONENT}/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_dma.c
+        ${PLACE_COMPONENT}/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_exti.c
+        ${PLACE_COMPONENT}/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_gpio.c
+        ${PLACE_COMPONENT}/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_rcc.c
+        ${PLACE_COMPONENT}/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_usart.c
+        ${PLACE_COMPONENT}/mcu/stm32f4xx_ll/sources/stm32f4xx_ll_utils.c
+        ${PLACE_COMPONENT}/mcu/core/sources/syscalls.c
+        ${PLACE_COMPONENT}/mcu/core/sources/sysmem.c
+        ${PLACE_COMPONENT}/mcu/core/startup/startup_stm32f411retx.s
+        ${PLACE_COMPONENT}/mcu/core/system_clock/sources/system_clock.c
+        ${PLACE_COMPONENT}/mcu/core/system_interrupts/sources/system_interrupts.c
+        ${PLACE_COMPONENT}/mcu/periphery/usart_log/sources/usart_log.c
+        ${PLACE_COMPONENT}/hal/hal_usart_log/sources/hal_usart_log.c
+        ${PLACE_COMPONENT}/bsp/sources/bsp.c
     INCLUDE_DIRECTORIES
-        components/system/mcu/cmsis/arm
-        components/system/mcu/cmsis/stm32f4xx/include
-        components/system/mcu/stm32f4xx_ll/include
-        components/system/mcu/core/system_interrupts/include
-        components/system/mcu/core/system_clock/include
-        components/system/mcu/periphery/usart_log/include
-        components/system/hal/hal_usart_log/include
-        components/system/bsp/include
+        ${PLACE_COMPONENT}/mcu/cmsis/arm
+        ${PLACE_COMPONENT}/mcu/cmsis/stm32f4xx/include
+        ${PLACE_COMPONENT}/mcu/stm32f4xx_ll/include
+        ${PLACE_COMPONENT}/mcu/core/system_interrupts/include
+        ${PLACE_COMPONENT}/mcu/core/system_clock/include
+        ${PLACE_COMPONENT}/mcu/periphery/usart_log/include
+        ${PLACE_COMPONENT}/hal/hal_usart_log/include
+        ${PLACE_COMPONENT}/bsp/include
     DEFINITIONS
         STM32F411xE
         DEBUG 

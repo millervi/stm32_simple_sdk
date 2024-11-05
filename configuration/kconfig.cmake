@@ -12,7 +12,14 @@ The function run configuration/scripts/kconfig.py for generate autoconf.h file.
 ]]
 function(kconfig_update_configuration)
     message(STATUS "Kconfig update configuration")
-    execute_process(COMMAND python ${CMAKE_SOURCE_DIR}/configuration/scripts/kconfig.py
+    # Uses different process command for different platform
+    set(process_comand "")
+    if(WIN32)
+        set(process_comand $ENV{PYTHON_PATH}/python)
+    elseif(UNIX AND NOT APPLE)
+        set(process_comand "python")
+    endif()
+    execute_process(COMMAND ${process_comand} ${CMAKE_SOURCE_DIR}/configuration/scripts/kconfig.py
         ${CMAKE_SOURCE_DIR}/Kconfig
         ${CMAKE_SOURCE_DIR}/configuration/autoconf.h
         ${CMAKE_SOURCE_DIR}/.config
@@ -67,7 +74,7 @@ endfunction()
 #[[
 Get global list of mcu flags.
 
-MCU_FLAGS output argument, multivalue list of mcu flags, 
+MCU_FLAGS output argument, multivalue list of mcu flags,
 sede in the project configuration menu
 ]]
 function(kconfig_get_mcu_flags MCU_FLAGS)
@@ -119,7 +126,7 @@ endfunction()
 #[[
 Get global list of flag enable float for printf scanf.
 
-MCU_FLOAT_ENABLE_FLAGS output argument, list of flag enable float for printf, 
+MCU_FLOAT_ENABLE_FLAGS output argument, list of flag enable float for printf,
 sede in the project configuration menu
 ]]
 function(kconfig_get_mcu_flags_of_float_for_printf_scanf_enable MCU_FLOAT_ENABLE_FLAGS)
@@ -135,7 +142,7 @@ endfunction()
 #[[
 Get global list of gcc ASM flags.
 
-GCC_ASSEMBLER_FLAGS output argument, multivalue list of gcc assembler flags, 
+GCC_ASSEMBLER_FLAGS output argument, multivalue list of gcc assembler flags,
 sede in the project configuration menu
 ]]
 function(kconfig_get_gcc_assembler_flags GCC_ASSEMBLER_FLAGS)
@@ -171,7 +178,7 @@ endfunction()
 #[[
 Get global list of gcc compiler flags.
 
-GCC_COMPILER_FLAGS output argument, multivalue list of gcc compiler flags, 
+GCC_COMPILER_FLAGS output argument, multivalue list of gcc compiler flags,
 sede in the project configuration menu
 ]]
 function(kconfig_get_gcc_compiler_flags GCC_COMPILER_FLAGS)
@@ -284,7 +291,7 @@ endfunction()
 #[[
 Get global list of gcc linker flags.
 
-GCC_LINKER_FLAGS output argument, multivalue list of gcc linker flags, 
+GCC_LINKER_FLAGS output argument, multivalue list of gcc linker flags,
 sede in the project configuration menu
 ]]
 function(kconfig_get_gcc_linker_flags GCC_LINKER_FLAGS)
@@ -330,7 +337,7 @@ endfunction()
 #[[
 Get global list of gxx compiler flags.
 
-GXX_COMPILER_FLAGS output argument, multivalue list of gxx compiler flags, 
+GXX_COMPILER_FLAGS output argument, multivalue list of gxx compiler flags,
 sede in the project configuration menu
 ]]
 function(kconfig_get_gxx_compiler_flags GXX_COMPILER_FLAGS)
@@ -452,12 +459,12 @@ endfunction()
 #[[
 Get global list of gxx linker flags.
 
-GXX_LINKER_FLAGS output argument, multivalue list of gxx linker flags, 
+GXX_LINKER_FLAGS output argument, multivalue list of gxx linker flags,
 sede in the project configuration menu
 ]]
 function(kconfig_get_gxx_linker_flags GXX_LINKER_FLAGS)
     if("${CONFIG_GXX_LINKER_GENERAL_LINKER_SCRIPT}" STREQUAL "")
-        message(FATAL_ERROR "Add linker script in build settings.")   
+        message(FATAL_ERROR "Add linker script in build settings.")
     else()
         string(APPEND KCONFIG_SETTINGS_BUILD_GXX_LINKER_FLAGS " -T${CMAKE_SOURCE_DIR}/${CONFIG_GXX_LINKER_GENERAL_LINKER_SCRIPT}")
     endif()

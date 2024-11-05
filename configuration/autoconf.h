@@ -39,3 +39,4 @@
 #define CONFIG_PROJECT_NAME "stm32_simple_sdk"
 #define CONFIG_PROJECT_VERSION "0.0.1"
 #define CONFIG_ASSERT_ON 1
+#define CONFIG_LOGGER_ON 1

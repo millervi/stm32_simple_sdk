@@ -1,8 +1,10 @@
 include(${CMAKE_SOURCE_DIR}/component.cmake)
 
+set(PLACE_COMPONENT ${CMAKE_CURRENT_SOURCE_DIR})
+
 component_registration(
     SOURCE_FILES
-        components/assert/sources/assert.c
+        ${PLACE_COMPONENT}/sources/assert.c
     INCLUDE_DIRECTORIES
-        components/assert/include
+        ${PLACE_COMPONENT}/include
 )

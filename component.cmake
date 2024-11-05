@@ -64,11 +64,11 @@ endfunction()
 #[[
 Register a component to the build.
 
-SOURCE_FILES input optional argument, multivalue list of source files for the component  
+SOURCE_FILES input optional argument, multivalue list of source files for the component
 mast be .c for С, .cpp for CPP and .s for ASM
 
-INCLUDE_DIRECTORIES input optional argument, multivalue list of include directories 
-for the component, files in director mast be .h for C or .hpp for CPP files 
+INCLUDE_DIRECTORIES input optional argument, multivalue list of include directories
+for the component, files in director mast be .h for C or .hpp for CPP files
 with other extension will be ignored
 
 DEFINITIONS input optional argument, multivalue list of definition for the component
@@ -88,31 +88,31 @@ function(component_registration)
             get_filename_component(SOURCE_FILE_NAME ${SOURCE_FILE} NAME)
             get_filename_component(SOURCE_FILE_DIRECTORY ${SOURCE_FILE} DIRECTORY)
             set(FOUND_SOURCE_FILE "FOUND_SOURCE_FILE-NOTFOUND")
-            find_file(FOUND_SOURCE_FILE NAMES ${SOURCE_FILE_NAME} PATHS ${CMAKE_SOURCE_DIR}/${SOURCE_FILE_DIRECTORY})
+            find_file(FOUND_SOURCE_FILE NAMES ${SOURCE_FILE_NAME} PATHS ${SOURCE_FILE_DIRECTORY})
             if(NOT EXISTS ${FOUND_SOURCE_FILE})
-                message(FATAL_ERROR "Not found source file: ${CMAKE_SOURCE_DIR}/${SOURCE_FILE}")
+                message(FATAL_ERROR "Not found source file: ${SOURCE_FILE}")
             endif()
             set_property(GLOBAL APPEND PROPERTY SOURCE_FILES_GLOBAL_LIST ${FOUND_SOURCE_FILE})
         endforeach()
     endif()
     if(arg_INCLUDE_DIRECTORIES)
         foreach(INCLUDE_DIRECTORY ${arg_INCLUDE_DIRECTORIES})
-            if(NOT EXISTS ${CMAKE_SOURCE_DIR}/${INCLUDE_DIRECTORY})
-                message(FATAL_ERROR "Not found include directory: ${CMAKE_SOURCE_DIR}/${INCLUDE_DIRECTORY}")
+            if(NOT EXISTS ${INCLUDE_DIRECTORY})
+                message(FATAL_ERROR "Not found include directory: ${INCLUDE_DIRECTORY}")
             endif()
             file(GLOB INCLUDE_FILES
-                ${CMAKE_SOURCE_DIR}/${INCLUDE_DIRECTORY}/*.h
+                ${INCLUDE_DIRECTORY}/*.h
                 if(CONFIG_CXX_ON)
-                    ${CMAKE_SOURCE_DIR}/${INCLUDE_DIRECTORY}/*.hpp
+                    ${INCLUDE_DIRECTORY}/*.hpp
                 endif()
             )
             if(INCLUDE_FILES)
                 foreach(INCLUDE_FILE ${INCLUDE_FILES})
                     file(RELATIVE_PATH CONTENT ${CMAKE_SOURCE_DIR} ${INCLUDE_FILE})
-                    set_property(GLOBAL APPEND PROPERTY INCLUDE_FILES_GLOBAL_LIST ${CMAKE_SOURCE_DIR}/${CONTENT})
+                    set_property(GLOBAL APPEND PROPERTY INCLUDE_FILES_GLOBAL_LIST ${CONTENT})
                 endforeach()
             endif()
-            set_property(GLOBAL APPEND PROPERTY INCLUDE_DIRECTORIES_GLOBAL_LIST ${CMAKE_SOURCE_DIR}/${INCLUDE_DIRECTORY})
+            set_property(GLOBAL APPEND PROPERTY INCLUDE_DIRECTORIES_GLOBAL_LIST ${INCLUDE_DIRECTORY})
         endforeach()
     endif()
     foreach(DEFINE ${arg_DEFINITIONS})
@@ -124,9 +124,9 @@ function(component_registration)
             get_filename_component(EMBED_FILE_DIRECTORY ${EMBED_FILE} DIRECTORY)
             get_filename_component(EMBED_FILE_EXTENSION ${EMBED_FILE} EXT)
             set(FOUND_EMBED_FILE "FOUND_EMBED_FILE-NOTFOUND")
-            find_file(FOUND_EMBED_FILE NAMES ${EMBED_FILE_NAME} PATHS ${CMAKE_SOURCE_DIR}/${EMBED_FILE_DIRECTORY})
+            find_file(FOUND_EMBED_FILE NAMES ${EMBED_FILE_NAME} PATHS ${EMBED_FILE_DIRECTORY})
             if(NOT EXISTS ${FOUND_EMBED_FILE})
-                message(FATAL_ERROR "Not found embed file: ${CMAKE_SOURCE_DIR}/${EMBED_FILE}")
+                message(FATAL_ERROR "Not found embed file: ${EMBED_FILE}")
             endif()
             if(NOT ${EMBED_FILE_EXTENSION} STREQUAL .bin AND NOT ${EMBED_FILE_EXTENSION} STREQUAL .hex)
                 message(FATAL_ERROR "Invalid extension for embedded file: ${FOUND_EMBED_FILE}, extension most be .bin or .hex")
@@ -139,9 +139,9 @@ function(component_registration)
             get_filename_component(STATIC_LIB_NAME ${STATIC_LIB} NAME)
             get_filename_component(STATIC_LIB_DIRECTORY ${STATIC_LIB} DIRECTORY)
             set(FOUND_STATIC_LIB "FOUND_STATIC_LIB-NOTFOUND")
-            find_library(FOUND_STATIC_LIB NAMES ${STATIC_LIB_NAME} PATHS ${CMAKE_SOURCE_DIR}/${STATIC_LIB_DIRECTORY})
+            find_library(FOUND_STATIC_LIB NAMES ${STATIC_LIB_NAME} PATHS ${STATIC_LIB_DIRECTORY})
             if(NOT EXISTS ${FOUND_STATIC_LIB})
-                message(FATAL_ERROR "Not found static library: ${CMAKE_SOURCE_DIR}/${STATIC_LIB}")
+                message(FATAL_ERROR "Not found static library: ${STATIC_LIB}")
             endif()
             set_property(GLOBAL APPEND PROPERTY STATIC_LIBS_GLOBAL_LIST ${FOUND_STATIC_LIB})
         endforeach()
@@ -209,24 +209,18 @@ function(get_all_static_libs_of_components STATIC_LIBS)
 endfunction()
 
 #[[
-The function of checking all directories from the PLACE_COMPONENTS list and searching 
-in each directory for the CMakeLists.txt file, if the directory contains this file, 
+The function of checking all directories from the PLACE_COMPONENTS list and searching
+in each directory for the CMakeLists.txt file, if the directory contains this file,
 it will be added as a sub directory and the component will be registered.
 ]]
 function(components_search)
     message(STATUS "Begin search components ...")
-    get_sub_directories(${PLACE_COMPONENTS} COMPONENTS)
+    file(GLOB_RECURSE COMPONENTS ${PLACE_COMPONENTS}/CMakeLists.txt)
     foreach(COMPONENT ${COMPONENTS})
-        set(MY_BUILD_${COMPONENT} TRUE
-            CACHE BOOL "Build the ${COMPONENT} component")
-        if(MY_BUILD_${COMPONENT} AND EXISTS
-            ${PLACE_COMPONENTS}/${COMPONENT}/CMakeLists.txt)
-            message(STATUS "Component \"${COMPONENT}\" will be included")
-            add_subdirectory(${PLACE_COMPONENTS}/${COMPONENT})
-        else()
-            message(STATUS "Component \"${COMPONENT}\" will NOT be included")
-            list(REMOVE_ITEM COMPONENTS ${COMPONENT})
-        endif()
+        get_filename_component(COMPONENT_PATH ${COMPONENT} PATH)
+        get_filename_component(COMPONENT_NAME ${COMPONENT_PATH} NAME)
+        add_subdirectory(${COMPONENT_PATH})
+        message(STATUS "Component will be included: " ${COMPONENT_NAME})
     endforeach()
     message(STATUS "End search components")
 endfunction()
